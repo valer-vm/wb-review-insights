@@ -69,24 +69,28 @@ brew install uv
 
 ### 2. Установите плагин
 
-**В приложении Claude (вкладка Code).** Команды `/plugin` там нет, плагины
-ставятся через меню:
+**В приложении Claude (вкладка Code).** Команды `/plugin` там нет. Добавьте
+в `~/.claude/settings.json` два ключа (если в файле уже есть другие настройки,
+допишите эти рядом с ними):
 
-1. Добавьте маркетплейс в `~/.claude/settings.json` (файл настроек Claude Code;
-   если в нём уже есть другие настройки, добавьте ключ рядом с ними):
+```json
+{
+  "extraKnownMarketplaces": {
+    "wb-review-insights": {
+      "source": { "source": "github", "repo": "valer-vm/wb-review-insights" }
+    }
+  },
+  "enabledPlugins": {
+    "wb-review-insights@wb-review-insights": true
+  }
+}
+```
 
-   ```json
-   {
-     "extraKnownMarketplaces": {
-       "wb-review-insights": {
-         "source": { "source": "github", "repo": "valer-vm/wb-review-insights" }
-       }
-     }
-   }
-   ```
+Полностью перезапустите приложение (⌘Q) и откройте новую сессию во вкладке Code.
 
-2. Перезапустите приложение. Нажмите **+** рядом с полем ввода → **Plugins** →
-   **Add plugin**, найдите `wb-review-insights` и установите его.
+> В «Настройки → Плагины → Мои» после этого виден сам маркетплейс; клик по нему
+> открывает его папку в Finder — так и должно быть. Включает плагин именно ключ
+> `enabledPlugins`.
 
 **В Claude Code в терминале:**
 
