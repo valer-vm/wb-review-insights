@@ -30,7 +30,7 @@ CONFIG_NAME = "dashboard.toml"
 
 DEFAULT_CONFIG_TOML = """\
 # Настройки дашборда wb-review-insights — общие для всех списков.
-# После правки пересоберите дашборд: /wb-dashboard <имя списка>
+# После правки пересоберите дашборд: /wb-review-insights:wb-dashboard <имя списка>
 
 [blocks]
 # Порядок блоков на странице. Доступные блоки:

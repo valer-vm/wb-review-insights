@@ -69,17 +69,47 @@ brew install uv
 
 ### 2. Установите плагин
 
-В Claude Code:
+**В приложении Claude (вкладка Code).** Команды `/plugin` там нет, плагины
+ставятся через меню:
+
+1. Добавьте маркетплейс в `~/.claude/settings.json` (файл настроек Claude Code;
+   если в нём уже есть другие настройки, добавьте ключ рядом с ними):
+
+   ```json
+   {
+     "extraKnownMarketplaces": {
+       "wb-review-insights": {
+         "source": { "source": "github", "repo": "valer-vm/wb-review-insights" }
+       }
+     }
+   }
+   ```
+
+2. Перезапустите приложение. Нажмите **+** рядом с полем ввода → **Plugins** →
+   **Add plugin**, найдите `wb-review-insights` и установите его.
+
+**В Claude Code в терминале:**
 
 ```
 /plugin marketplace add valer-vm/wb-review-insights
 /plugin install wb-review-insights@wb-review-insights
 ```
 
-Перезапустите Claude Code. После этого появится команда `/analyze-competitors`.
+или из обычной командной строки:
 
-> Чтобы проверить плагин до публикации на GitHub, подключите локальную папку:
-> `/plugin marketplace add /путь/к/wb-review-insights`
+```bash
+claude plugin marketplace add valer-vm/wb-review-insights
+claude plugin install wb-review-insights@wb-review-insights
+```
+
+После установки появятся команды **`/wb-review-insights:analyze-competitors`** и
+**`/wb-review-insights:wb-dashboard`**. Команды плагинов всегда идут с префиксом
+имени плагина: наберите `/` и начните вводить `analyze` — команда найдётся
+в списке. Ниже в тексте для краткости префикс опущен.
+
+> Чтобы проверить плагин до публикации, подключите локальную папку:
+> `claude plugin marketplace add /путь/к/wb-review-insights` или
+> `claude --plugin-dir /путь/к/wb-review-insights`.
 
 ## Запуск
 

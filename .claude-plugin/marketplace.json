@@ -1,14 +1,14 @@
 {
   "name": "wb-review-insights",
+  "description": "Анализ отзывов конкурентов на Wildberries для продавцов маркетплейсов",
   "owner": {
     "name": "valer-vm"
   },
   "plugins": [
     {
       "name": "wb-review-insights",
-      "source": "./",
-      "description": "Анализ отзывов конкурентов на Wildberries с помощью субагентов Claude Code",
-      "version": "0.2.0"
+      "source": ".",
+      "description": "Анализ отзывов конкурентов на Wildberries с помощью субагентов Claude Code"
     }
   ]
 }

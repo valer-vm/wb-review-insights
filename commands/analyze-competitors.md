@@ -119,4 +119,4 @@ uv run "${CLAUDE_PLUGIN_ROOT}/scripts/dashboard.py" LIST
 4. Что не вошло в отчёт: товары с ошибкой сбора (из `_status.json`, с причиной)
    и с ошибкой анализа. Если всё прошло — так и скажи одной строкой.
 5. Одной строкой: настройки дашборда — в `wb-insights/dashboard.toml`,
-   пересобрать после правки — `/wb-dashboard NAME`.
+   пересобрать после правки — `/wb-review-insights:wb-dashboard NAME`.
