@@ -1,0 +1,431 @@
+{
+ "valuation": "4.9",
+ "valuationSum": 9538,
+ "valuationDistribution": {
+  "1": 15,
+  "2": 6,
+  "3": 14,
+  "4": 36,
+  "5": 1865
+ },
+ "feedbackCount": 1938,
+ "feedbackCountWithText": 714,
+ "feedbacks": [
+  {
+   "id": "fb000",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 879299892,
+   "text": "Минусы через спутник очень тяжело дышать у ребёнка асма -30 на улице приступ начался  хорошо што болонья был собой",
+   "pros": "",
+   "cons": "",
+   "productValuation": 1,
+   "color": "Темно-коричневый",
+   "size": "56-58",
+   "createdDate": "2026-10-12T10:33:51Z"
+  },
+  {
+   "id": "fb001",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 586134160,
+   "text": "Внешне цвет и фасон - загляденье, но очень грубая ткань. Я бы сама такое не надела",
+   "pros": "",
+   "cons": "",
+   "productValuation": 3,
+   "color": "Синий",
+   "size": "52-54",
+   "createdDate": "2026-07-16T05:21:40Z"
+  },
+  {
+   "id": "fb002",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 347592932,
+   "text": "Выгорела сильно , месяц может носили",
+   "pros": "",
+   "cons": "",
+   "productValuation": 3,
+   "color": "зеленый",
+   "size": "52-54",
+   "createdDate": "2026-07-07T12:17:38Z"
+  },
+  {
+   "id": "fb003",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 347592932,
+   "text": "",
+   "pros": "Выгорела через несколько месяцев, окрас стал неравномерным, некрасивым. Именно в цвете хаки. В сером цвете такой проблемы нет",
+   "cons": "",
+   "productValuation": 2,
+   "color": "Хаки",
+   "size": "54-56",
+   "createdDate": "2026-05-10T12:07:07Z"
+  },
+  {
+   "id": "fb004",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 313751963,
+   "text": "",
+   "pros": "",
+   "cons": "До этого заказывала размер меньше. Хорошая была, не растягивалась. А эта растянулась",
+   "productValuation": 1,
+   "color": "Черный",
+   "size": "54-56",
+   "createdDate": "2026-05-08T10:11:04Z"
+  },
+  {
+   "id": "fb005",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 313751963,
+   "text": "После первой же стирки,краска отошла от ткани,появился запах ужасный.Не добросовестный продавец,прими меры",
+   "pros": "Шлак",
+   "cons": "",
+   "productValuation": 1,
+   "color": "черный",
+   "size": "54-56",
+   "createdDate": "2026-04-22T07:20:58Z"
+  },
+  {
+   "id": "fb006",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 489291114,
+   "text": "Шапка на голове сидит хорошо. Не спадает. Много вещей вашего бренда. Но после пару стирок выглядит как будто ее носили 3 года. Режим стирки ручной. Больше брать не стала бы.",
+   "pros": "",
+   "cons": "",
+   "productValuation": 3,
+   "color": "синий",
+   "size": "50-52",
+   "createdDate": "2026-04-18T09:10:22Z"
+  },
+  {
+   "id": "fb007",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 313751963,
+   "text": "",
+   "pros": "",
+   "cons": "после одной стирки цвет просо ка будто стрирала год , высветилось и пошив неправильной какие руки надо иметь чтоб сшить такие шапки",
+   "productValuation": 1,
+   "color": "черный",
+   "size": "50-52",
+   "createdDate": "2026-04-16T11:29:48Z"
+  },
+  {
+   "id": "fb008",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 313751963,
+   "text": "",
+   "pros": "Хорошее качество",
+   "cons": "Шапка пришла без снуда",
+   "productValuation": 4,
+   "color": "черный",
+   "size": "48-50",
+   "createdDate": "2026-09-25T02:47:53Z"
+  },
+  {
+   "id": "fb009",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 879299892,
+   "text": "",
+   "pros": "Цвет крутой",
+   "cons": "Очень тугая, уши больно, хотя по размеру",
+   "productValuation": 4,
+   "color": "коричневый",
+   "size": "52-54",
+   "createdDate": "2026-08-18T21:03:04Z"
+  },
+  {
+   "id": "fb010",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 335721249,
+   "text": "На ОГ 48-49 см давит.",
+   "pros": "Красивая, достаточно плотная",
+   "cons": "Маломерит",
+   "productValuation": 5,
+   "color": "Красный",
+   "size": "48-50",
+   "createdDate": "2026-05-06T07:00:26Z"
+  },
+  {
+   "id": "fb011",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 879286173,
+   "text": "",
+   "pros": "Плотная.",
+   "cons": "Туговатая шапка на 7 лет.",
+   "productValuation": 5,
+   "color": "Мокрый асфальт",
+   "size": "56-58",
+   "createdDate": "2026-04-22T04:17:13Z"
+  },
+  {
+   "id": "fb012",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 368686013,
+   "text": "Из трех вариантов дочка выбрала этот. Подбирала к куртке. Шапка и снуд плотные, на осень очень хороши.",
+   "pros": "",
+   "cons": "",
+   "productValuation": 5,
+   "color": "Красный",
+   "size": "56-58",
+   "createdDate": "2026-10-14T20:16:18.565Z"
+  },
+  {
+   "id": "fb013",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 313751963,
+   "text": "Как всегда хорошо",
+   "pros": "",
+   "cons": "",
+   "productValuation": 5,
+   "color": "Черный",
+   "size": "54-56",
+   "createdDate": "2026-10-14T19:42:22.038Z"
+  },
+  {
+   "id": "fb014",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 313751963,
+   "text": "Идеально. НО!! У нас близнецы, 1шапка супер, 2я ужас! Ткань тонкая, сшита криво, цвет как выгорел. Перезаказала. То-ли смены разные отшивают, то-ли подделка. Пожалуйста не портите, ваш бренд супер.Спасибо.",
+   "pros": "",
+   "cons": "",
+   "productValuation": 5,
+   "color": "Черный",
+   "size": "48-50",
+   "createdDate": "2026-10-14T09:53:07.882Z"
+  },
+  {
+   "id": "fb015",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 347592932,
+   "text": "Отличная шапка",
+   "pros": "",
+   "cons": "",
+   "productValuation": 5,
+   "color": "Хаки",
+   "size": "50-52",
+   "createdDate": "2026-10-14T04:59:51.466Z"
+  },
+  {
+   "id": "fb016",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 331498822,
+   "text": "Классная шапка, 56-58 прям на взрослого",
+   "pros": "",
+   "cons": "",
+   "productValuation": 5,
+   "color": "Графит, черный",
+   "size": "56-58",
+   "createdDate": "2026-10-14T04:01:29.958Z"
+  },
+  {
+   "id": "fb017",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 331498822,
+   "text": "Супер, такая приятная нитка и сидит хорошо ! Спасибо!",
+   "pros": "",
+   "cons": "",
+   "productValuation": 5,
+   "color": "серый",
+   "size": "54-56",
+   "createdDate": "2026-10-13T16:09:33.490Z"
+  },
+  {
+   "id": "fb018",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 313751963,
+   "text": "Классная шапочка и снуд материал  приятный , снуд ширОкий закрывает все горло ребенку тепло и комфортно",
+   "pros": "",
+   "cons": "",
+   "productValuation": 5,
+   "color": "Черный",
+   "size": "50-52",
+   "createdDate": "2026-10-12T20:09:48.055Z"
+  },
+  {
+   "id": "fb019",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 331498822,
+   "text": "Очень хорошо подошли даже на подростка (58/60). Хлопок, тянется",
+   "pros": "",
+   "cons": "",
+   "productValuation": 5,
+   "color": "серый",
+   "size": "56-58",
+   "createdDate": "2026-10-12T19:37:07.080Z"
+  },
+  {
+   "id": "fb020",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 273979936,
+   "text": "Отлично даже на подростка с большой 58/60 головой. Глубокая",
+   "pros": "",
+   "cons": "",
+   "productValuation": 5,
+   "color": "зеленый",
+   "size": "56-58",
+   "createdDate": "2026-10-12T19:34:54.332Z"
+  },
+  {
+   "id": "fb021",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 879299892,
+   "text": "Красивая шапка",
+   "pros": "",
+   "cons": "",
+   "productValuation": 5,
+   "color": "Темно-коричневый",
+   "size": "56-58",
+   "createdDate": "2026-10-12T18:03:44.855Z"
+  },
+  {
+   "id": "fb022",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 586134160,
+   "text": "",
+   "pros": "",
+   "cons": "",
+   "productValuation": 5,
+   "color": "Синий",
+   "size": "54-56",
+   "createdDate": "2026-10-14T14:06:28.290Z"
+  },
+  {
+   "id": "fb023",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 307488251,
+   "text": "",
+   "pros": "",
+   "cons": "",
+   "productValuation": 5,
+   "color": "серый",
+   "size": "54-56",
+   "createdDate": "2026-10-13T18:14:29.619Z"
+  },
+  {
+   "id": "fb024",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 313751963,
+   "text": "",
+   "pros": "Как всегда качественно сделано. Всё без нареканий",
+   "cons": "",
+   "productValuation": 5,
+   "color": "черный",
+   "size": "52-54",
+   "createdDate": "2025-05-28T13:19:37Z"
+  },
+  {
+   "id": "fb025",
+   "wbUserDetails": {
+    "country": "ru",
+    "name": "Покупатель",
+    "hasPhoto": false
+   },
+   "nmId": 307521180,
+   "text": "Грубая ткань, стоит колом и размер великоват",
+   "pros": "",
+   "cons": "",
+   "productValuation": 4,
+   "color": "фиолетовый",
+   "size": "48-50",
+   "createdDate": "2025-05-27T19:09:58Z"
+  }
+ ]
+}

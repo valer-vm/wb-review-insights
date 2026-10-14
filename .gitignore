@@ -1,0 +1,19 @@
+# Python и uv
+.venv/
+__pycache__/
+.pytest_cache/
+
+# Результаты запусков — у каждого пользователя свои
+/wb-insights/
+/data/
+/results/
+/report_*.xlsx
+*.json.invalid
+
+# Локальные настройки Claude Code и редакторов
+.claude/settings.local.json
+.idea/
+.vscode/
+
+# macOS
+.DS_Store

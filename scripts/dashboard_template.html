@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__TITLE__</title>
+<style>
+:root {
+  --bg: #f6f5f9; --card: #ffffff; --text: #1d1b24; --muted: #6b6878; --line: #e4e1ec;
+  --accent: #7b3fe4; --accent-soft: #efe7fd;
+  --bad: #d64545; --bad-soft: #fde9e7; --good: #2e9d63; --good-soft: #e3f5ea;
+  --warn: #c98a12; --shadow: 0 1px 2px rgba(20, 10, 40, .06), 0 2px 8px rgba(20, 10, 40, .04);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15131b; --card: #1f1c27; --text: #ece9f3; --muted: #9c98aa; --line: #322e3d;
+    --accent: #a77bf3; --accent-soft: #2d2440;
+    --bad: #f07272; --bad-soft: #3a2124; --good: #5cc98d; --good-soft: #1c3227;
+    --warn: #e2b04a; --shadow: none;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font: 15px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+header { padding: 24px 16px 8px; max-width: 1200px; margin: 0 auto; }
+h1 { font-size: 24px; margin: 0 0 4px; }
+h2 { font-size: 18px; margin: 0 0 12px; }
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+main { max-width: 1200px; margin: 0 auto; padding: 0 16px 48px; display: grid; gap: 16px; }
+section.block { scroll-margin-top: 110px; background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  padding: 16px; box-shadow: var(--shadow); min-width: 0; }
+.filters { position: sticky; top: 0; z-index: 5; background: var(--bg); padding: 10px 0;
+  display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; border-bottom: 1px solid var(--line); }
+.filters label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { border: 1px solid var(--line); background: var(--card); color: var(--text); border-radius: 999px;
+  padding: 4px 10px; font: inherit; font-size: 13px; cursor: pointer; }
+.chip.on { background: var(--accent-soft); border-color: var(--accent); }
+input[type=number] { width: 56px; }
+input[type=search], select, input[type=number] { font: inherit; padding: 5px 8px; border-radius: 8px;
+  border: 1px solid var(--line); background: var(--card); color: var(--text); }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+.stat { border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+.stat b { display: block; font-size: 24px; }
+.bars { display: grid; gap: 8px; }
+.bar { display: grid; grid-template-columns: minmax(120px, 30%) 1fr auto; gap: 10px; align-items: center;
+  cursor: pointer; border-radius: 6px; padding: 2px 4px; }
+.bar:hover { background: var(--accent-soft); }
+.bar .track { background: var(--line); border-radius: 4px; height: 14px; overflow: hidden; }
+.bar .fill { height: 100%; border-radius: 4px; }
+.bar .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tag { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px; margin-left: 6px;
+  vertical-align: 1px; white-space: nowrap; }
+.tag.niche { background: var(--bad-soft); color: var(--bad); }
+.tag.new { background: var(--bad-soft); color: var(--bad); }
+.tag.gone { background: var(--good-soft); color: var(--good); }
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { border-bottom: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
+th { font-weight: 600; color: var(--muted); }
+td.cell { text-align: center; font-variant-numeric: tabular-nums; min-width: 56px; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.comp { border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+.comp a { color: var(--accent); text-decoration: none; }
+.comp ol { margin: 8px 0 0; padding-left: 20px; }
+.rec { border-left: 3px solid var(--accent); padding: 4px 0 4px 12px; margin-bottom: 12px; }
+.rec .chip { font-size: 12px; padding: 2px 8px; margin: 4px 4px 0 0; }
+.quote { border-bottom: 1px solid var(--line); padding: 8px 0; }
+.quote .meta { font-size: 12px; color: var(--muted); }
+.stars { color: var(--warn); letter-spacing: 1px; }
+.qtools { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+.qtools input[type=search] { flex: 1 1 220px; }
+.hist td.spark { width: 180px; }
+.up { color: var(--bad); } .down { color: var(--good); }
+.empty { color: var(--muted); font-style: italic; }
+.summary-text { white-space: pre-wrap; background: var(--accent-soft); border-radius: 10px; padding: 12px; margin-top: 12px; }
+@media (max-width: 600px) {
+  .bar { grid-template-columns: 1fr auto; }
+  .bar .track { grid-column: 1 / -1; grid-row: 2; }
+  h1 { font-size: 20px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1 id="title"></h1>
+  <div id="subtitle" class="muted small"></div>
+</header>
+<main>
+  <div class="filters" id="filters"></div>
+  <div id="blocks" style="display:grid;gap:16px"></div>
+</main>
+<script id="data" type="application/json">__DATA__</script>
+<script>
+"use strict";
+const D = JSON.parse(document.getElementById("data").textContent);
+const CFG = D.config;
+const ALL = D.competitors.map(c => String(c.article));
+const S = {
+  arts: new Set(ALL), niche: CFG.filters.niche_only, min: CFG.filters.min_mentions,
+  q: "", qsection: "all", qtheme: "", qart: "", qrating: ""
+};
+const esc = s => String(s ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+const fmt = n => n == null ? "—" : Number(n).toLocaleString("ru-RU");
+const brand = a => { const c = D.competitors.find(c => String(c.article) === String(a)); return c ? (c.brand || c.article) : a; };
+const stars = r => "★".repeat(r) + "☆".repeat(5 - r);
+
+function view(g) {
+  // числа по выбранным конкурентам — простые суммы из посчитанного Python
+  let mentions = 0, comps = 0;
+  for (const a of S.arts) { const v = g.per_article[a] || 0; mentions += v; if (v) comps++; }
+  const n = S.arts.size;
+  return { ...g, mentions, comps, niche: comps >= 2 && comps * 2 >= n };
+}
+function filtered(section) {
+  return D[section].map(view)
+    .filter(g => g.mentions >= S.min && (!S.niche || g.niche))
+    .sort((a, b) => b.comps - a.comps || b.mentions - a.mentions);
+}
+
+// ---------------------------------------------------------------- фильтры
+function renderFilters() {
+  const el = document.getElementById("filters");
+  el.innerHTML = `
+    <div class="chips" id="artchips">${D.competitors.map(c =>
+      `<button class="chip ${S.arts.has(String(c.article)) ? "on" : ""}" data-art="${c.article}" title="${esc(c.name)}">${esc(c.brand || c.article)}</button>`).join("")}</div>
+    <label><input type="checkbox" id="niche" ${S.niche ? "checked" : ""}> только общие для ниши</label>
+    <label>мин. упоминаний <input type="number" id="min" min="1" value="${S.min}"></label>`;
+  el.querySelectorAll("[data-art]").forEach(b => b.onclick = () => {
+    const a = b.dataset.art;
+    if (S.arts.has(a)) { if (S.arts.size > 1) S.arts.delete(a); } else S.arts.add(a);
+    render();
+  });
+  el.querySelector("#niche").onchange = e => { S.niche = e.target.checked; render(); };
+  el.querySelector("#min").onchange = e => { S.min = Math.max(1, parseInt(e.target.value) || 1); render(); };
+}
+
+// ---------------------------------------------------------------- блоки
+const BLOCK = {
+  summary() {
+    const comps = D.competitors.filter(c => S.arts.has(String(c.article)));
+    const ratings = comps.map(c => parseFloat(c.rating)).filter(x => !isNaN(x));
+    const avg = ratings.length ? (ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(2) : "—";
+    const top = filtered("complaints")[0];
+    const neg = comps.reduce((s, c) => s + c.negative, 0), pos = comps.reduce((s, c) => s + c.positive, 0);
+    return `<h2>Итоги</h2><div class="cards">
+      <div class="stat"><b>${comps.length}</b><span class="muted">конкурентов</span></div>
+      <div class="stat"><b>${fmt(neg + pos)}</b><span class="muted">отзывов: ${fmt(neg)} негативных, ${fmt(pos)} позитивных</span></div>
+      <div class="stat"><b>${avg}</b><span class="muted">средний рейтинг</span></div>
+      <div class="stat"><b style="font-size:17px">${top ? esc(top.theme) : "—"}</b><span class="muted">${top ? `главная жалоба: ${top.mentions} упом., у ${top.comps} из ${S.arts.size}` : "жалоб нет"}</span></div>
+    </div>${D.chat_summary ? `<div class="summary-text">${esc(D.chat_summary)}</div>` : ""}`;
+  },
+  complaints() { return bars("complaints", "Топ жалоб", "var(--bad)"); },
+  praise() { return bars("praise", "Топ похвалы", "var(--good)"); },
+  matrix() {
+    const rows = filtered("complaints").slice(0, CFG.top.complaints);
+    const arts = ALL.filter(a => S.arts.has(a));
+    if (!rows.length) return `<h2>Тема × конкурент</h2><p class="empty">Нет тем под выбранные фильтры</p>`;
+    const max = Math.max(1, ...rows.flatMap(g => arts.map(a => g.per_article[a] || 0)));
+    return `<h2>Тема × конкурент</h2><p class="muted small">Сколько раз жалоба встречается у каждого конкурента</p>
+      <div class="scroll"><table><thead><tr><th>Жалоба</th>${arts.map(a => `<th class="cell">${esc(brand(a))}</th>`).join("")}</tr></thead>
+      <tbody>${rows.map(g => `<tr><td>${esc(g.theme)}${g.niche ? '<span class="tag niche">ниша</span>' : ""}</td>${arts.map(a => {
+        const v = g.per_article[a] || 0;
+        const alpha = v ? (0.15 + 0.75 * v / max).toFixed(2) : 0;
+        return `<td class="cell" style="background:color-mix(in srgb, var(--bad) ${Math.round(alpha * 100)}%, transparent)">${v || ""}</td>`;
+      }).join("")}</tr>`).join("")}</tbody></table></div>`;
+  },
+  competitors() {
+    const comps = D.competitors.filter(c => S.arts.has(String(c.article)));
+    return `<h2>Конкуренты</h2><div class="grid2">${comps.map(c => `<div class="comp">
+      <div><b>${esc(c.brand)}</b> <a href="${esc(c.url)}" target="_blank" rel="noopener">${c.article} ↗</a></div>
+      <div class="muted small">${esc(c.name)}</div>
+      <div class="small" style="margin-top:6px">Рейтинг <b>${esc(c.rating ?? "—")}</b> · оценок ${fmt(c.total_feedbacks)} · в анализе ${c.negative} негативных и ${c.positive} позитивных</div>
+      ${c.top_complaints.length ? `<ol class="small">${c.top_complaints.map(t => `<li>${esc(t.theme)} — ${t.mentions}</li>`).join("")}</ol>` : '<p class="empty small">Жалоб не найдено</p>'}
+    </div>`).join("")}</div>`;
+  },
+  recommendations() {
+    const R = D.recommendations;
+    if (!R) return `<h2>Рекомендации</h2><p class="empty">Сводки нет — рекомендации не построены</p>`;
+    const list = items => items.length ? items.map(r => `<div class="rec"><b>${esc(r.title)}</b><div>${esc(r.details)}</div>
+      <div>${(r.based_on || []).map(t => `<button class="chip" data-theme="${esc(t)}">${esc(t)}</button>`).join("")}</div></div>`).join("")
+      : '<p class="empty">—</p>';
+    return `<h2>Рекомендации</h2><div class="grid2">
+      <div><h3>Что улучшить в товаре</h3>${list(R.improve_product)}</div>
+      <div><h3>Что подчеркнуть в карточке</h3>${list(R.highlight_in_card)}</div></div>`;
+  },
+  quotes() {
+    const themes = [...new Set(D.quotes.map(q => q.theme))].sort();
+    const q = S.q.toLowerCase();
+    const items = D.quotes.filter(x => S.arts.has(String(x.article))
+      && (S.qsection === "all" || x.section === S.qsection)
+      && (!S.qtheme || x.theme === S.qtheme)
+      && (!S.qart || String(x.article) === S.qart)
+      && (!S.qrating || String(x.rating) === S.qrating)
+      && (!q || x.quote.toLowerCase().includes(q) || x.theme.toLowerCase().includes(q)));
+    const opt = (v, label, cur) => `<option value="${esc(v)}" ${v === cur ? "selected" : ""}>${esc(label)}</option>`;
+    return `<h2 id="quotes-title">Цитаты из отзывов</h2>
+      <div class="qtools">
+        <input type="search" id="q" placeholder="Поиск по цитатам и темам" value="${esc(S.q)}">
+        <select id="qsection">${opt("all", "жалобы и похвала", S.qsection)}${opt("complaints", "жалобы", S.qsection)}${opt("praise", "похвала", S.qsection)}</select>
+        <select id="qtheme">${opt("", "все темы", S.qtheme)}${themes.map(t => opt(t, t, S.qtheme)).join("")}</select>
+        <select id="qart">${opt("", "все конкуренты", S.qart)}${ALL.filter(a => S.arts.has(a)).map(a => opt(a, brand(a), S.qart)).join("")}</select>
+        <select id="qrating">${opt("", "любая оценка", S.qrating)}${[1,2,3,4,5].map(r => opt(String(r), r + "★", S.qrating)).join("")}</select>
+      </div>
+      <div class="muted small">Найдено: ${items.length}</div>
+      ${items.slice(0, 300).map(x => `<div class="quote">«${esc(x.quote)}»
+        <div class="meta"><span class="stars">${stars(x.rating)}</span> · ${esc(brand(x.article))} · ${esc(x.theme)} · ${x.section === "complaints" ? "жалоба" : "похвала"}</div></div>`).join("")
+        || '<p class="empty">Ничего не найдено</p>'}`;
+  },
+  history() {
+    const H = D.history;
+    const unit = H.metric === "per100" ? "на 100 негативных отзывов" : "упоминаний";
+    const note = H.skipped ? `<p class="muted small">Запусков с другим набором товаров не вошло: ${H.skipped}.</p>` : "";
+    if (H.runs.length < 2) return `<h2>Динамика</h2><p class="empty">Для динамики нужно 2 и больше запусков с тем же списком товаров. Сейчас: ${H.runs.length}.</p>${note}`;
+    const badge = s => s.state === "new" ? '<span class="tag new">новая</span>' : s.state === "gone" ? '<span class="tag gone">ушла</span>' : "";
+    const delta = s => s.delta == null ? "" : s.delta > 0 ? `<span class="up">▲ ${s.delta}</span>` : s.delta < 0 ? `<span class="down">▼ ${Math.abs(s.delta)}</span>` : "—";
+    return `<h2>Динамика жалоб</h2>
+      <p class="muted small">Запуски: ${H.runs.map(esc).join(" → ")}. Значения — ${unit}. Фильтр конкурентов на этот блок не влияет.</p>${note}
+      <div class="scroll"><table class="hist"><thead><tr><th>Жалоба</th><th>Изменение по запускам</th><th class="cell">Сейчас</th><th class="cell">К прошлому</th></tr></thead>
+      <tbody>${H.series.map(s => `<tr><td>${esc(s.theme)}${badge(s)}</td><td class="spark" title="${s.values.map(v => v ?? "—").join(" → ")}">${spark(s.values)}</td>
+        <td class="cell">${s.values.at(-1) ?? "—"}</td><td class="cell">${delta(s)}</td></tr>`).join("")}</tbody></table></div>`;
+  },
+};
+
+function bars(section, title, color) {
+  const n = section === "complaints" ? CFG.top.complaints : CFG.top.praise;
+  const rows = filtered(section).slice(0, n);
+  if (!rows.length) return `<h2>${title}</h2><p class="empty">Нет тем под выбранные фильтры</p>`;
+  const max = Math.max(...rows.map(g => g.mentions));
+  return `<h2>${title}</h2><p class="muted small">Упоминаний в отзывах · у скольких конкурентов. Нажмите на тему, чтобы увидеть цитаты.</p>
+    <div class="bars">${rows.map(g => `<div class="bar" data-theme="${esc(g.theme)}" data-section="${section}" title="${esc(g.description)}">
+      <div>${esc(g.theme)}${section === "complaints" && g.niche ? '<span class="tag niche">ниша</span>' : ""}</div>
+      <div class="track"><div class="fill" style="width:${(100 * g.mentions / max).toFixed(1)}%;background:${color}"></div></div>
+      <div class="num">${g.mentions} · ${g.comps} из ${S.arts.size}</div></div>`).join("")}</div>`;
+}
+
+function spark(values) {
+  // каждая строка — в своём масштабе, чтобы был виден тренд; точные числа — в подсказке
+  const w = 160, h = 32, n = values.length, step = n > 1 ? w / (n - 1) : 0;
+  const vs = values.filter(v => v != null), lo = Math.min(...vs), hi = Math.max(...vs);
+  const y = v => hi === lo ? h / 2 : h - 4 - (h - 8) * (v - lo) / (hi - lo);
+  const pts = values.map((v, i) => v == null ? null : [i * step, y(v)]);
+  let path = "", pen = false;
+  for (const p of pts) { if (!p) { pen = false; continue; } path += (pen ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1); pen = true; }
+  const dots = pts.map(p => p ? `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.5" fill="var(--bad)"/>` : "").join("");
+  return `<svg width="${w + 6}" height="${h}" viewBox="-3 0 ${w + 6} ${h}" role="img" aria-label="${values.map(v => v ?? "нет").join(", ")}">
+    <path d="${path}" fill="none" stroke="var(--bad)" stroke-width="2"/>${dots}</svg>`;
+}
+
+function showQuotes(theme, section) {
+  S.qtheme = theme; S.qsection = section || "all"; S.q = "";
+  render();
+  document.getElementById("quotes-title")?.scrollIntoView({ behavior: "smooth" });
+}
+
+function render() {
+  renderFilters();
+  const root = document.getElementById("blocks");
+  root.innerHTML = CFG.blocks.map(b => `<section class="block" id="block-${b}">${BLOCK[b]()}</section>`).join("");
+  root.querySelectorAll("[data-theme]").forEach(el => el.onclick = () => showQuotes(el.dataset.theme, el.dataset.section));
+  const bind = (id, key) => { const el = document.getElementById(id); if (el) el[el.tagName === "INPUT" ? "oninput" : "onchange"] = e => {
+    S[key] = e.target.value; render();
+    if (id === "q") { const i = document.getElementById("q"); i.focus(); i.setSelectionRange(i.value.length, i.value.length); }
+  }; };
+  bind("q", "q"); bind("qsection", "qsection"); bind("qtheme", "qtheme"); bind("qart", "qart"); bind("qrating", "qrating");
+}
+
+document.getElementById("title").textContent = `Отзывы конкурентов: ${D.list}`;
+document.getElementById("subtitle").textContent =
+  `Запуск ${D.label} · конкурентов: ${D.competitors.length} · дашборд собран ${D.generated_at}` +
+  (D.failed.length ? ` · не вошли: ${D.failed.map(f => f.article || f.input).join(", ")}` : "");
+render();
+</script>
+</body>
+</html>

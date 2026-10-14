@@ -1,0 +1,12 @@
+{
+  "name": "wb-review-insights",
+  "version": "0.2.0",
+  "description": "Анализ отзывов конкурентов на Wildberries: на что жалуются, за что хвалят, что улучшить и что подчеркнуть в карточке. Excel-отчёт.",
+  "author": {
+    "name": "valer-vm"
+  },
+  "homepage": "https://github.com/valer-vm/wb-review-insights",
+  "repository": "https://github.com/valer-vm/wb-review-insights",
+  "license": "MIT",
+  "keywords": ["wildberries", "marketplace", "reviews", "competitors", "отзывы"]
+}

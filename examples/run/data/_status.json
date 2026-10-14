@@ -1,0 +1,26 @@
+[
+  {
+    "input": "https://www.wildberries.ru/catalog/368686013/detail.aspx?size=1",
+    "article": 368686013,
+    "status": "ok",
+    "imt_id": 11819787,
+    "csv": "examples/run/data/368686013.csv",
+    "name": "Комплект шапка + снуд двухслойные в рубчик",
+    "brand": "BODO",
+    "collected": {
+      "neg": 51,
+      "pos": 100
+    }
+  },
+  {
+    "input": "https://ozon.ru/x",
+    "status": "error",
+    "message": "не похоже на ссылку на товар WB: «https://ozon.ru/x». Ожидается вида https://www.wildberries.ru/catalog/12345678/detail.aspx или просто артикул"
+  },
+  {
+    "input": "99999999999",
+    "article": 99999999999,
+    "status": "error",
+    "message": "товар 99999999999 не найден на WB (проверьте артикул или ссылку)"
+  }
+]
