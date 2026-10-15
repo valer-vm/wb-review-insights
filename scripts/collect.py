@@ -30,11 +30,13 @@ import pandas as pd
 import requests
 
 # Если WB поменяет адреса — править здесь (см. README, раздел про DevTools).
+# feedbacks1/2 отдают отзывы любой карточки; feedback-view-01/02 — половинки
+# хранилища: на чужую карточку они отвечают пустой заглушкой (0 отзывов).
 FEEDBACK_HOSTS = (
-    "https://feedback-view-02.wb.ru",
-    "https://feedback-view-01.wb.ru",
     "https://feedbacks1.wb.ru",
     "https://feedbacks2.wb.ru",
+    "https://feedback-view-02.wb.ru",
+    "https://feedback-view-01.wb.ru",
 )
 FEEDBACK_PATH = "/feedbacks/v2/{imt_id}"
 CARD_URL = "https://basket-{basket:02d}.wbbasket.ru/vol{vol}/part{part}/{nm}/info/ru/card.json"
@@ -173,16 +175,23 @@ class WbClient:
         raise CollectError(f"товар {nm} не найден на WB (проверьте артикул или ссылку)")
 
     def fetch_feedbacks(self, imt_id: int) -> dict:
-        errors = []
+        """Первый ответ с отзывами. Пустой ответ может быть заглушкой сервера,
+        который не хранит эту карточку, — тогда спрашиваем следующий."""
+        errors, empty = [], None
         for host in FEEDBACK_HOSTS:
             try:
                 data = self.get_json(host + FEEDBACK_PATH.format(imt_id=imt_id))
             except CollectError as e:
                 errors.append(str(e))
                 continue
-            if data is not None:
+            if data is None:
+                errors.append(f"{_host(host)}: 404")
+            elif data.get("feedbacks") or data.get("feedbackCount"):
                 return data
-            errors.append(f"{_host(host)}: 404")
+            else:
+                empty = empty or data
+        if empty is not None:
+            return empty  # ни на одном сервере отзывов нет — у карточки их правда 0
         raise CollectError("не удалось получить отзывы: " + "; ".join(errors))
 
 

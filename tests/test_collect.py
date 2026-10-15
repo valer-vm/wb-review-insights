@@ -54,7 +54,7 @@ def make_client(routes):
 def ok_routes():
     return {
         f"basket-21.wbbasket.ru/vol3686/part368686/{NM}/": FakeResponse(200, CARD),
-        f"feedback-view-02.wb.ru/feedbacks/v2/{IMT}": FakeResponse(200, FEEDBACKS),
+        f"feedbacks1.wb.ru/feedbacks/v2/{IMT}": FakeResponse(200, FEEDBACKS),
     }
 
 
@@ -176,7 +176,7 @@ def test_fetch_card_not_found():
 
 
 def test_feedbacks_retry_on_5xx_then_ok():
-    url = f"feedback-view-02.wb.ru/feedbacks/v2/{IMT}"
+    url = f"feedbacks1.wb.ru/feedbacks/v2/{IMT}"
     client = make_client({url: [FakeResponse(503), FakeResponse(429), FakeResponse(200, FEEDBACKS)]})
     assert len(client.fetch_feedbacks(IMT)["feedbacks"]) == len(FEEDBACKS["feedbacks"])
     assert len(client.session.calls) == 3
@@ -184,10 +184,31 @@ def test_feedbacks_retry_on_5xx_then_ok():
 
 def test_feedbacks_fall_back_to_next_host():
     client = make_client({
-        "feedback-view-02": FakeResponse(404),
+        "feedbacks1": FakeResponse(404),
+        "feedbacks2": requests.ConnectionError("down"),
         f"feedback-view-01.wb.ru/feedbacks/v2/{IMT}": FakeResponse(200, FEEDBACKS),
     })
     assert client.fetch_feedbacks(IMT)["feedbackCount"] == FEEDBACKS["feedbackCount"]
+
+
+STUB = {"feedbackCount": 0, "feedbacks": None, "valuation": "", "valuationSum": 0}
+
+
+def test_empty_stub_is_not_final():
+    # сервер, который не хранит карточку, отвечает 200 и пустой заглушкой
+    client = make_client({
+        "feedbacks1": FakeResponse(404),
+        "feedbacks2": FakeResponse(404),
+        "feedback-view-02": FakeResponse(200, STUB),
+        f"feedback-view-01.wb.ru/feedbacks/v2/{IMT}": FakeResponse(200, FEEDBACKS),
+    })
+    assert len(client.fetch_feedbacks(IMT)["feedbacks"]) == len(FEEDBACKS["feedbacks"])
+
+
+def test_really_no_feedbacks():
+    client = make_client({"feedback": FakeResponse(200, STUB)})
+    data = client.fetch_feedbacks(IMT)
+    assert data["feedbackCount"] == 0 and len(client.session.calls) == len(collect.FEEDBACK_HOSTS)
 
 
 def test_site_down_gives_clear_error():
