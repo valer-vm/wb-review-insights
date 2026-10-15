@@ -1,6 +1,6 @@
 {
   "name": "wb-review-insights",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Анализ отзывов конкурентов на Wildberries: на что жалуются, за что хвалят, что улучшить и что подчеркнуть в карточке. Excel-отчёт.",
   "author": {
     "name": "valer-vm"
