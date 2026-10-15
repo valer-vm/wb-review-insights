@@ -20,7 +20,8 @@ tools: Read, Write, Glob
 
 Найди файлы через Glob (`results/*.json`) и прочитай каждый через Read.
 Формат файла конкурента: `article`, `name`, `brand`, `reviews_analyzed`,
-`complaints` и `praise` — списки тем `{theme, description, mentions, examples}`.
+`complaints` и `praise` — списки тем `{theme, description, mentions, examples}`
+(поле `reviews` — id отзывов для проверки, тебе оно не нужно).
 
 ## Что сделать
 

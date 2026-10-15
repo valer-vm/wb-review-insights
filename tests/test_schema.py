@@ -25,6 +25,18 @@ def csv():
 
 
 @pytest.fixture
+def old_csv(csv):
+    """CSV до 0.3.0 — без колонки id; к нему относятся результаты из fixtures/results."""
+    return csv.drop(columns="id")
+
+
+@pytest.fixture
+def agent():
+    """Результат в том виде, как его пишет review-analyst: reviews и id, без mentions и rating."""
+    return json.loads((FIXTURES / f"agent_{NM}.json").read_text(encoding="utf-8"))
+
+
+@pytest.fixture
 def result():
     return load(f"{NM}.json")
 
@@ -62,31 +74,31 @@ def test_norm_yo():
 
 # ---------------------------------------------------------------- result
 
-def test_valid_result(result, csv):
-    assert schema.validate_result(result, csv) == []
+def test_valid_result(result, old_csv):
+    assert schema.validate_result(result, old_csv) == []
     assert schema.validate_result(load("111222333.json")) == []
 
 
-def test_result_invented_quote(result, csv):
+def test_result_invented_quote(result, old_csv):
     result["complaints"][0]["examples"][0]["quote"] = "Шапка развалилась через день"
-    errs = schema.validate_result(result, csv)
+    errs = schema.validate_result(result, old_csv)
     assert len(errs) == 1 and "нет в отзывах" in errs[0]
 
 
-def test_result_quote_from_any_field(result, csv):
+def test_result_quote_from_any_field(result, old_csv):
     # жалоба из отзыва на 4★ без «Недостатков» (bucket = pos) — допустима
     result["complaints"][2]["examples"][0]["quote"] = "Грубая ткань, стоит колом"
-    assert schema.validate_result(result, csv) == []
+    assert schema.validate_result(result, old_csv) == []
 
 
-def test_result_counts_must_match_csv(result, csv):
+def test_result_counts_must_match_csv(result, old_csv):
     result["reviews_analyzed"]["negative"] = 99
-    assert any("в CSV 12" in e for e in schema.validate_result(result, csv))
+    assert any("в CSV 12" in e for e in schema.validate_result(result, old_csv))
 
 
-def test_result_mentions_over_limit(result, csv):
+def test_result_mentions_over_limit(result, old_csv):
     result["complaints"][0]["mentions"] = 25
-    errs = schema.validate_result(result, csv)
+    errs = schema.validate_result(result, old_csv)
     assert any("больше числа отзывов (24)" in e for e in errs)
 
 
@@ -121,6 +133,100 @@ def test_empty_lists_are_fine():
     data = {"article": 1, "name": "", "brand": "", "reviews_analyzed": {"negative": 0, "positive": 0},
             "complaints": [], "praise": []}
     assert schema.validate_result(data) == []
+
+
+def test_old_result_needs_reviews_with_new_csv(result, csv):
+    errs = schema.validate_result(result, csv)
+    assert errs and all("reviews" in e for e in errs)
+
+
+# ---------------------------------------------------------------- finalize_result
+
+def test_finalize_counts_sorts_and_fills(agent, csv):
+    notes = schema.finalize_result(agent, csv)
+    assert [t["mentions"] for t in agent["complaints"]] == [4, 3, 2]
+    assert [t["mentions"] for t in agent["praise"]] == [4, 3]
+    assert agent["complaints"][0]["examples"][1] == {"id": 9, "quote": "После первой же стирки,краска отошла от ткани",
+                                                     "rating": 1}
+    assert any("отсортированы" in n for n in notes)
+    assert schema.validate_result(agent, csv) == []
+    assert schema.finalize_result(agent, csv) == []  # повторный прогон ничего не меняет
+
+
+def test_finalize_fixes_example_id_and_adds_review(agent, csv):
+    theme = agent["complaints"][1]           # «Маломерит, давит», reviews [3, 8, 10]
+    theme["examples"][0]["id"] = 5           # цитата на самом деле из отзыва 3
+    theme["reviews"] = [8, 10]
+    notes = schema.finalize_result(agent, csv)
+    assert theme["examples"][0]["id"] == 3 and theme["examples"][0]["rating"] == 4
+    assert sorted(theme["reviews"]) == [3, 8, 10] and theme["mentions"] == 3
+    assert any("5 → 3" in n for n in notes) and any("добавлен" in n for n in notes)
+    assert schema.validate_result(agent, csv) == []
+
+
+def test_finalize_drops_unknown_and_duplicate_ids(agent, csv):
+    agent["praise"][0]["reviews"] = [17, 17, 20, 999, 21]
+    schema.finalize_result(agent, csv)
+    t = next(t for t in agent["praise"] if t["theme"] == "Подходит на большую голову")
+    assert t["reviews"] == [17, 20, 21] and t["mentions"] == 3
+
+
+def test_finalize_drops_rare_themes_in_big_group(agent, csv, monkeypatch):
+    monkeypatch.setattr(schema, "SMALL_GROUP", 5)    # в группе 12 отзывов — нужно от 2 упоминаний
+    agent["complaints"][0]["reviews"] = [4]
+    notes = schema.finalize_result(agent, csv)
+    assert "Грубая ткань" not in [t["theme"] for t in agent["complaints"]]
+    assert any("убрана" in n for n in notes)
+
+
+def test_finalize_keeps_rare_themes_in_small_group(agent, csv):
+    agent["complaints"][0]["reviews"] = [4]
+    schema.finalize_result(agent, csv)
+    assert "Грубая ткань" in [t["theme"] for t in agent["complaints"]]
+
+
+def test_finalize_trims_themes(agent, csv, monkeypatch):
+    monkeypatch.setattr(schema, "MAX_THEMES", 2)
+    schema.finalize_result(agent, csv)
+    assert [t["theme"] for t in agent["complaints"]] == ["Выгорает и теряет цвет после стирок", "Маломерит, давит"]
+
+
+def test_finalize_fixes_reviews_analyzed(agent, csv):
+    agent["reviews_analyzed"] = {"negative": 99, "positive": 1}
+    schema.finalize_result(agent, csv)
+    assert agent["reviews_analyzed"] == {"negative": 12, "positive": 12}
+
+
+def test_finalize_leaves_invented_quote_to_validate(agent, csv):
+    agent["praise"][0]["examples"][0]["quote"] = "Шапка развалилась через день"
+    schema.finalize_result(agent, csv)
+    errs = schema.validate_result(agent, csv)
+    assert len(errs) == 1 and "нет в отзывах" in errs[0]
+
+
+@pytest.mark.parametrize("mutate, expected", [
+    (lambda t: t.update(reviews=[]), "reviews: нужен непустой список"),
+    (lambda t: t.update(reviews=[3, 999]), "нет отзывов с id [999]"),
+    (lambda t: t.update(reviews=[3, 3]), "повторяются"),
+    (lambda t: t.update(mentions=7), "а отзывов в reviews"),
+    (lambda t: t["examples"][0].update(id=5), "нет в отзыве id 5"),
+])
+def test_validate_reviews_errors(agent, csv, mutate, expected):
+    schema.finalize_result(agent, csv)
+    mutate(next(t for t in agent["complaints"] if t["theme"] == "Маломерит, давит"))
+    assert any(expected in e for e in schema.validate_result(agent, csv))
+
+
+def test_cli_fixes_agent_file(tmp_path, csv, capsys):
+    csv_path = tmp_path / f"{NM}.csv"
+    csv.to_csv(csv_path, index=False)
+    res = tmp_path / f"{NM}.json"
+    res.write_text((FIXTURES / f"agent_{NM}.json").read_text(encoding="utf-8"), encoding="utf-8")
+    assert schema.main(["result", str(res), "--csv", str(csv_path), "--no-fix"]) == 1
+    assert schema.main(["result", str(res), "--csv", str(csv_path)]) == 0
+    assert "исправлено автоматически" in capsys.readouterr().out
+    data = json.loads(res.read_text(encoding="utf-8"))
+    assert [t["mentions"] for t in data["complaints"]] == [4, 3, 2]
 
 
 # ---------------------------------------------------------------- summary
@@ -173,10 +279,12 @@ def test_summary_stats(summary, results):
 
 # ---------------------------------------------------------------- CLI
 
-def test_cli(tmp_path, csv, capsys):
+def test_cli(tmp_path, old_csv, capsys):
     csv_path = tmp_path / f"{NM}.csv"
-    csv.to_csv(csv_path, index=False)
-    assert schema.main(["result", str(RESULTS_DIR / f"{NM}.json"), "--csv", str(csv_path)]) == 0
+    old_csv.to_csv(csv_path, index=False)
+    res = tmp_path / f"{NM}.json"
+    res.write_text((RESULTS_DIR / f"{NM}.json").read_text(encoding="utf-8"), encoding="utf-8")
+    assert schema.main(["result", str(res), "--csv", str(csv_path)]) == 0
     assert schema.main(["summary", str(RESULTS_DIR / "summary.json")]) == 0
 
     assert schema.main(["result", str(tmp_path / "nope.json")]) == 1

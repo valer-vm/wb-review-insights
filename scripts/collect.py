@@ -62,7 +62,7 @@ HEADERS = {
     ),
 }
 
-CSV_COLUMNS = ["rating", "text", "pros", "cons", "date", "color", "size", "nm_id", "bucket"]
+CSV_COLUMNS = ["id", "rating", "text", "pros", "cons", "date", "color", "size", "nm_id", "bucket"]
 MAX_FIELD_CHARS = 1000
 
 LINK_RE = re.compile(r"wildberries\.(?:ru|by|kz|am|kg|uz)/catalog/(\d+)", re.IGNORECASE)
@@ -216,7 +216,8 @@ def select_reviews(
     now: datetime | None = None,
 ) -> pd.DataFrame:
     """Негатив = 1–3★ или 4–5★ с заполненными «Недостатками»; позитив — остальные 4–5★.
-    Внутри каждой группы — самые свежие до лимита. Пустые отзывы пропускаются."""
+    Внутри каждой группы — самые свежие до лимита. Пустые отзывы пропускаются.
+    Колонка id — номер строки с 1."""
     now = now or datetime.now(timezone.utc)
     since = now - timedelta(days=round(months * 30.44)) if months > 0 else None
     rows = []
@@ -235,10 +236,12 @@ def select_reviews(
             "bucket": "neg" if rating <= 3 or cons else "pos",
             "_ts": created,
         })
-    df = pd.DataFrame(rows, columns=CSV_COLUMNS + ["_ts"])
+    df = pd.DataFrame(rows, columns=CSV_COLUMNS[1:] + ["_ts"])
     df = df.sort_values("_ts", ascending=False, kind="stable")
     parts = [df[df.bucket == "neg"].head(neg_limit), df[df.bucket == "pos"].head(pos_limit)]
-    return pd.concat(parts).drop(columns="_ts").reset_index(drop=True)
+    df = pd.concat(parts).drop(columns="_ts").reset_index(drop=True)
+    df.insert(0, "id", range(1, len(df) + 1))  # номер отзыва: на него ссылается review-analyst
+    return df
 
 
 # ---------------------------------------------------------------- сборка

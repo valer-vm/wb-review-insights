@@ -1,6 +1,6 @@
 [project]
 name = "wb-review-insights"
-version = "0.2.1"
+version = "0.3.0"
 description = "Анализ отзывов конкурентов на Wildberries с помощью субагентов Claude Code"
 requires-python = ">=3.11"
 dependencies = [

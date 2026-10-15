@@ -99,6 +99,7 @@ def select(**kw):
 def test_select_columns_and_buckets():
     df = select()
     assert list(df.columns) == collect.CSV_COLUMNS
+    assert list(df.id) == list(range(1, len(df) + 1))
     neg, pos = df[df.bucket == "neg"], df[df.bucket == "pos"]
     # негатив: все 1–3★ и 4–5★ с заполненными «Недостатками»
     assert (neg.rating <= 3).sum() == 8
