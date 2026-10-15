@@ -124,6 +124,26 @@ claude plugin install wb-review-insights@wb-review-insights
 > `claude plugin marketplace add /путь/к/wb-review-insights` или
 > `claude --plugin-dir /путь/к/wb-review-insights`.
 
+### Обновление плагина
+
+Приложение Claude само плагин не обновляет, даже с `"autoUpdate": true` у маркетплейса.
+Обновите его встроенным в приложение CLI (команды `claude` в терминале для этого не нужно):
+
+```bash
+CLAUDE=$(ls -d ~/Library/Application\ Support/Claude/claude-code/*/*/claude.app/Contents/MacOS/claude | tail -1)
+"$CLAUDE" plugin marketplace update wb-review-insights
+"$CLAUDE" plugin update wb-review-insights@wb-review-insights
+```
+
+Если плагин был удалён, вместо `plugin update` выполните
+`"$CLAUDE" plugin install wb-review-insights@wb-review-insights`. Затем полностью
+перезапустите приложение (⌘Q). Установленную версию видно в
+`~/.claude/plugins/installed_plugins.json` (поле `version`).
+
+В Claude Code в терминале то же самое делают
+`claude plugin marketplace update wb-review-insights` и
+`claude plugin update wb-review-insights@wb-review-insights`.
+
 ## Запуск
 
 1. Создайте файл `links.txt` со ссылками на товары конкурентов, по одной на строку:
