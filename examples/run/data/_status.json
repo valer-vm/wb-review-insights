@@ -1,14 +1,40 @@
 [
   {
-    "input": "https://www.wildberries.ru/catalog/368686013/detail.aspx?size=1",
-    "article": 368686013,
+    "input": "https://www.wildberries.ru/catalog/420173691/detail.aspx",
+    "article": 420173691,
     "status": "ok",
-    "imt_id": 11819787,
-    "csv": "examples/run/data/368686013.csv",
-    "name": "Комплект шапка + снуд двухслойные в рубчик",
-    "brand": "BODO",
+    "imt_id": 365738589,
+    "csv": "examples/run/data/420173691.csv",
+    "name": "Носки черные мужские высокие набор 5 пар",
+    "brand": "Yaelli",
     "collected": {
-      "neg": 51,
+      "neg": 77,
+      "pos": 100
+    }
+  },
+  {
+    "input": "https://www.wildberries.ru/catalog/411427116/detail.aspx",
+    "article": 411427116,
+    "status": "ok",
+    "imt_id": 4086542909,
+    "csv": "examples/run/data/411427116.csv",
+    "name": "Носки набор хлопковые высокие 10 пар",
+    "brand": "ЧАРО",
+    "collected": {
+      "neg": 150,
+      "pos": 100
+    }
+  },
+  {
+    "input": "https://www.wildberries.ru/catalog/10932708/detail.aspx",
+    "article": 10932708,
+    "status": "ok",
+    "imt_id": 8261898,
+    "csv": "examples/run/data/10932708.csv",
+    "name": "Носки мужские набор 5 пар, высокие, хлопок, однотонные,",
+    "brand": "Новомосковский трикотаж",
+    "collected": {
+      "neg": 87,
       "pos": 100
     }
   },

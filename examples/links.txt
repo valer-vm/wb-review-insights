@@ -1,6 +1,8 @@
 # Ссылки на товары конкурентов, по одной на строку.
 # Строки с # и пустые строки пропускаются. Можно писать просто артикул.
-https://www.wildberries.ru/catalog/368686013/detail.aspx
+https://www.wildberries.ru/catalog/420173691/detail.aspx
+https://www.wildberries.ru/catalog/411427116/detail.aspx
+https://www.wildberries.ru/catalog/10932708/detail.aspx
 
 # Две заведомо неверные строки — чтобы показать, как выглядят ошибки в отчёте:
 https://ozon.ru/x
